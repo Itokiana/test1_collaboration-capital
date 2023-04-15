@@ -11,12 +11,14 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 registerLocaleData(fr);
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +26,9 @@ registerLocaleData(fr);
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    NzDatePickerModule
+    NzDatePickerModule,
+    NzStepsModule,
+    NzButtonModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: fr_FR }
