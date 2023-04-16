@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-subscription-order-proc',
@@ -17,7 +17,12 @@ export class SubscriptionOrderProcComponent implements OnInit {
     this.validateForm = this.fb.group({
       duration: ['12', [Validators.required]],
       amountGigabytes: ['5', [Validators.required]],
-      upfrontPayment: [false]
+      upfrontPayment: [false],
+      cardNumber: [null, [Validators.required, this.validateCardNumberLength, this.onlyNumbersValidator]],
+      cardExp: [null, [Validators.required]],
+      cardSec: [null, [Validators.required, this.validateCardSecLength, this.onlyNumbersValidator]],
+      email: [null, [Validators.required]],
+      terms: [null, [Validators.required]],
     });
   }
 
@@ -53,6 +58,29 @@ export class SubscriptionOrderProcComponent implements OnInit {
         this.index = 1;
       }
     }
+  }
+
+  validateCardNumberLength(control: AbstractControl): { invalidLength: boolean } | null {
+    if (control.value && control.value.length !== 16) {
+      return { invalidLength: true };
+    }
+    return null;
+  }
+  onlyNumbersValidator(control: AbstractControl): { containsNonNumeric: boolean } | null {
+    const inputValue = control.value;
+    const containsOnlyNumbers = /^\d+$/.test(inputValue);
+    return containsOnlyNumbers ? null : { containsNonNumeric: true };
+  }
+
+  validateCardSecLength(control: AbstractControl): { invalidLength: boolean } | null {
+    if (control.value && control.value.length !== 3) {
+      return { invalidLength: true };
+    }
+    return null;
+  }
+
+  test() {
+    console.log(this.validateForm.get('terms'))
   }
 
   submitForm(): void {
