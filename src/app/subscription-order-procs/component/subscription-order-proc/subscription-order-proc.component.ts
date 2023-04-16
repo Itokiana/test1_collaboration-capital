@@ -1,14 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-subscription-order-proc',
   templateUrl: './subscription-order-proc.component.html',
   styleUrls: ['./subscription-order-proc.component.scss']
 })
-export class SubscriptionOrderProcComponent {
+export class SubscriptionOrderProcComponent implements OnInit {
   current = 0;
-
   index = 1;
+  validateForm!: UntypedFormGroup;
+
+  constructor(private fb: UntypedFormBuilder) {}
+
+  ngOnInit(): void {
+    this.validateForm = this.fb.group({
+      duration: ['12', [Validators.required]],
+      amountGigabytes: ['5', [Validators.required]],
+      upfrontPayment: [false]
+    });
+  }
 
   pre(): void {
     this.current -= 1;
@@ -44,5 +55,7 @@ export class SubscriptionOrderProcComponent {
     }
   }
 
-  constructor() {}
+  submitForm(): void {
+    console.log('submit', this.validateForm.value);
+  }
 }
