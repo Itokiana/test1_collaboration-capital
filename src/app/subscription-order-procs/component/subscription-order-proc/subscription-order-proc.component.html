@@ -78,11 +78,29 @@
       <div nz-row  nzJustify="center">
         <div nz-col [nzSpan]="12">
           <h2 nz-typography>Card informations</h2>
-          <nz-input-group nzCompact>
-            <input type="text" nz-input style="width: 60%;" placeholder="Card number" />
-            <nz-date-picker nzFormat="MM/YY" nzPlaceHolder="MM/YY" style="width: 20%;"></nz-date-picker>
-            <input type="number" nz-input style="width: 20%;" placeholder="CVC" />
-          </nz-input-group>
+          <div nz-form [nzLayout]="'inline'">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="Please input your card number with 16 numbers!">
+                <nz-input-group nzCompact>
+                  <input type="text" nz-input placeholder="Card number" formControlName="cardNumber" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control nzErrorTip="Please input your card expiration date!">
+                <nz-input-group nzCompact>
+                  <nz-date-picker nzFormat="MM/YY" nzPlaceHolder="MM/YY" formControlName="cardExp"></nz-date-picker>
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control nzErrorTip="Please input your card security with 3 numbers">
+                <nz-input-group nzCompact>
+                  <input type="text" nz-input placeholder="CVC" formControlName="cardSec" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
         </div>
       </div>
     </div>
@@ -99,12 +117,12 @@
         <nz-input-group [nzSize]="'large'">
           <div nz-row [nzGutter]="8">
             <div nz-col nzSpan="5">
-              <input type="email" nz-input placeholder="Enter your email" />
+              <input type="email" nz-input placeholder="Enter your email" formControlName="email" />
             </div>
           </div>
         </nz-input-group>
         <br>
-        <label nz-checkbox>Accept terms</label>
+        <label nz-checkbox formControlName="terms" (click)="test()">Accept terms</label>
       </nz-card>
     </div>
     <div class="steps-action">
@@ -114,7 +132,7 @@
       <button nz-button nzType="default" type="button" (click)="next()" *ngIf="current < 2">
         <span>Next</span>
       </button>
-      <button nz-button *ngIf="current === 2" nzType="primary" [disabled]="!validateForm.valid">
+      <button nz-button *ngIf="current === 2" nzType="primary" [disabled]="!validateForm.valid || !validateForm.get('terms')?.value">
         <span>Done</span>
       </button>
     </div>
