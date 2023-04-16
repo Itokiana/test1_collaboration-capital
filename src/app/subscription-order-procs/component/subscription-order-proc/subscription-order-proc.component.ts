@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { SubscriptionPlan } from '../../model/subscriptionPlan.model';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-subscription-order-proc',
@@ -7,13 +9,23 @@ import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } fro
   styleUrls: ['./subscription-order-proc.component.scss']
 })
 export class SubscriptionOrderProcComponent implements OnInit {
-  current = 0;
-  index = 1;
+  current: number = 0;
+  index: number = 1;
+  selectedDuration: number = 12;
+  selectedGb: number = 5;
+  total: number = 0;
+  subscriptionPlans: SubscriptionPlan[] = [
+    new SubscriptionPlan({ duration: 3, priceUsdPerGb: 3 }),
+    new SubscriptionPlan({ duration: 6, priceUsdPerGb: 2.5 }),
+    new SubscriptionPlan({ duration: 12, priceUsdPerGb: 2 }),
+  ]
+  selectedPlan?: SubscriptionPlan = this.subscriptionPlans[2];
   validateForm!: UntypedFormGroup;
 
-  constructor(private fb: UntypedFormBuilder) {}
+  constructor(private fb: UntypedFormBuilder, private message: NzMessageService) {}
 
   ngOnInit(): void {
+    this.total = this.selectedPlan ? this.selectedPlan.priceUsdPerGb * this.selectedGb : 0;
     this.validateForm = this.fb.group({
       duration: ['12', [Validators.required]],
       amountGigabytes: ['5', [Validators.required]],
@@ -79,11 +91,15 @@ export class SubscriptionOrderProcComponent implements OnInit {
     return null;
   }
 
-  test() {
-    console.log(this.validateForm.get('terms'))
+  changePlan() {
+    this.selectedDuration = this.validateForm.get('duration') ? parseInt(this.validateForm.get('duration')?.value) : this.selectedDuration;
+    this.selectedGb = this.validateForm.get('amountGigabytes') ? parseInt(this.validateForm.get('amountGigabytes')?.value) : this.selectedGb;
+    this.selectedPlan = this.subscriptionPlans.find( sp => sp.duration === this.selectedDuration);
+    this.total = this.selectedPlan ? this.selectedPlan.priceUsdPerGb * this.selectedGb : 0;
   }
 
   submitForm(): void {
     console.log('submit', this.validateForm.value);
+    this.message.create('success', `Successfully Purchased Cloud`);
   }
 }

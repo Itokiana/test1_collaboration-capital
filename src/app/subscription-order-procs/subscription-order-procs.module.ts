@@ -19,6 +19,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzStatisticModule } from 'ng-zorro-antd/statistic';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 import { SubscriptionOrderProcComponent } from './component/subscription-order-proc/subscription-order-proc.component';
 import { SelectedSubscriptionInfosComponent } from './component/selected-subscription-infos/selected-subscription-infos.component';
@@ -48,7 +49,8 @@ import { SelectedSubscriptionInfosComponent } from './component/selected-subscri
     NzTypographyModule,
     NzInputModule,
     NzDescriptionsModule,
-    NzStatisticModule
+    NzStatisticModule,
+    NzMessageModule
   ]
 })
 export class SubscriptionOrderProcsModule { }
