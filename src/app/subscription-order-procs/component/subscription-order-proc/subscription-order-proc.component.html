@@ -7,13 +7,18 @@
   <br>
   <br>
   <br>
-  <app-selected-subscription-infos></app-selected-subscription-infos>
+  <app-selected-subscription-infos
+    [duration]="selectedDuration"
+    [gigabytes]="selectedGb"
+    [total]="total"
+    [priceUsdPerGb]="selectedPlan?.priceUsdPerGb"
+  ></app-selected-subscription-infos>
   <br>
   <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <div class="steps-content" *ngIf="index===1">
       <nz-space nzDirection="vertical">
         <h2 nz-typography *nzSpaceItem>Duration</h2>
-        <nz-radio-group *nzSpaceItem formControlName="duration">
+        <nz-radio-group *nzSpaceItem formControlName="duration" (ngModelChange)="changePlan()">
           <div nz-row [nzGutter]="16" nzJustify="center">
             <div nz-col class="gutter-row" [nzSpan]="6">
               <nz-card>
@@ -40,7 +45,7 @@
         </nz-radio-group>
         <nz-divider *nzSpaceItem></nz-divider>
         <h2 nz-typography *nzSpaceItem>Amount of gigabytes in a cloud</h2>
-        <nz-radio-group *nzSpaceItem formControlName="amountGigabytes">
+        <nz-radio-group *nzSpaceItem formControlName="amountGigabytes" (ngModelChange)="changePlan()">
           <div nz-row [nzGutter]="16" nzJustify="center">
             <div nz-col class="gutter-row" [nzSpan]="6">
               <nz-card>
@@ -108,9 +113,9 @@
       <nz-card>
         <nz-descriptions nzTitle="Resume:"  nzBordered>
           <nz-descriptions-item nzTitle="Selected subscription">
-            Total price: <b>9 USD</b>
+            Total price: <b>{{ total }} USD</b>
             <br />
-            Price per GB: <b>3 USD</b>
+            Price per GB: <b>{{ selectedPlan?.priceUsdPerGb ||  0 }} USD</b>
           </nz-descriptions-item>
         </nz-descriptions>
         <br>
@@ -122,7 +127,7 @@
           </div>
         </nz-input-group>
         <br>
-        <label nz-checkbox formControlName="terms" (click)="test()">Accept terms</label>
+        <label nz-checkbox formControlName="terms">Accept terms</label>
       </nz-card>
     </div>
     <div class="steps-action">
