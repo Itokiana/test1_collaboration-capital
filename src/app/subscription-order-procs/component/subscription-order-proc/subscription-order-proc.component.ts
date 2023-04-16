@@ -44,12 +44,21 @@ export class SubscriptionOrderProcComponent implements OnInit {
   }
 
   next(): void {
-    this.current += 1;
-    this.changeContent();
-  }
-
-  done(): void {
-    console.log('done');
+    if (this.current === 0
+      && (this.validateForm.get('duration')?.status === 'VALID')
+      && (this.validateForm.get('amountGigabytes')?.status === 'VALID')
+    ) {
+      this.current += 1;
+      this.changeContent();
+    }
+    if (this.current === 1
+      && (this.validateForm.get('cardNumber')?.status === 'VALID')
+      && (this.validateForm.get('cardExp')?.status === 'VALID')
+      && (this.validateForm.get('cardSec')?.status === 'VALID')
+    ) {
+      this.current += 1;
+      this.changeContent();
+    }
   }
 
   changeContent(): void {
@@ -96,6 +105,7 @@ export class SubscriptionOrderProcComponent implements OnInit {
     this.selectedGb = this.validateForm.get('amountGigabytes') ? parseInt(this.validateForm.get('amountGigabytes')?.value) : this.selectedGb;
     this.selectedPlan = this.subscriptionPlans.find( sp => sp.duration === this.selectedDuration);
     this.total = this.selectedPlan ? this.selectedPlan.priceUsdPerGb * this.selectedGb : 0;
+    this.total = this.validateForm.get('upfrontPayment')?.value ? this.total - 0.1 : this.total;
   }
 
   submitForm(): void {

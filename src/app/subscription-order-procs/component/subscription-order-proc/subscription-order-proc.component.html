@@ -73,7 +73,7 @@
         <nz-divider *nzSpaceItem></nz-divider>
         <div *nzSpaceItem nz-row [nzGutter]="16" nzJustify="center" class="switch-upfront">
           <div nz-col class="gutter-row" [nzSpan]="6">
-            <nz-switch formControlName="upfrontPayment"></nz-switch>
+            <nz-switch formControlName="upfrontPayment" (ngModelChange)="changePlan()"></nz-switch>
             <span>Upfront payment</span>
           </div>
         </div>
