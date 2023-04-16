@@ -10,9 +10,6 @@ import fr from '@angular/common/locales/fr';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzStepsModule } from 'ng-zorro-antd/steps';
-import { NzButtonModule } from 'ng-zorro-antd/button';
 
 registerLocaleData(fr);
 
@@ -26,9 +23,6 @@ registerLocaleData(fr);
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    NzDatePickerModule,
-    NzStepsModule,
-    NzButtonModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: fr_FR }

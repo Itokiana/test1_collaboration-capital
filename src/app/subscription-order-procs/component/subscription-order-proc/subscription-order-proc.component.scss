@@ -9,6 +9,7 @@
   min-height: 200px;
   text-align: center;
   padding-top: 80px;
+  width: 100%;
 }
 
 .steps-action {
@@ -17,4 +18,18 @@
 
 button {
   margin-right: 8px;
+}
+
+.ant-space, .ant-radio-group {
+  width: 100%;
+}
+nz-switch {
+  margin-right: 10px !important;
+}
+.switch-upfront {
+  margin: 20px 0;
+}
+
+.text-inherit {
+  text-align: inherit;
 }

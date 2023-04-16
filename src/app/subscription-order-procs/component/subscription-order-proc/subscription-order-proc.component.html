@@ -4,19 +4,119 @@
     <nz-step nzTitle="Payment"></nz-step>
     <nz-step nzTitle="Confirmation"></nz-step>
   </nz-steps>
-
-  <div class="steps-content" *ngIf="index===1">First</div>
-  <div class="steps-content" *ngIf="index===2">Second</div>
-  <div class="steps-content" *ngIf="index===3">Third</div>
-  <div class="steps-action">
-    <button nz-button nzType="default" (click)="pre()" *ngIf="current > 0">
-      <span>Previous</span>
-    </button>
-    <button nz-button nzType="default" (click)="next()" *ngIf="current < 2">
-      <span>Next</span>
-    </button>
-    <button nz-button nzType="primary" (click)="done()" *ngIf="current === 2">
-      <span>Done</span>
-    </button>
-  </div>
+  <br>
+  <br>
+  <br>
+  <app-selected-subscription-infos></app-selected-subscription-infos>
+  <br>
+  <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <div class="steps-content" *ngIf="index===1">
+      <nz-space nzDirection="vertical">
+        <h2 nz-typography *nzSpaceItem>Duration</h2>
+        <nz-radio-group *nzSpaceItem formControlName="duration">
+          <div nz-row [nzGutter]="16" nzJustify="center">
+            <div nz-col class="gutter-row" [nzSpan]="6">
+              <nz-card>
+                <label nz-radio nzValue="3">
+                  <p>3 months</p>
+                </label>
+              </nz-card>
+            </div>
+            <div nz-col class="gutter-row" [nzSpan]="6">
+              <nz-card>
+                <label nz-radio nzValue="6">
+                  <p>6 months</p>
+                </label>
+              </nz-card>
+            </div>
+            <div nz-col class="gutter-row" [nzSpan]="6">
+              <nz-card>
+                <label nz-radio nzValue="12">
+                  <p>12 months</p>
+                </label>
+              </nz-card>
+            </div>
+          </div>
+        </nz-radio-group>
+        <nz-divider *nzSpaceItem></nz-divider>
+        <h2 nz-typography *nzSpaceItem>Amount of gigabytes in a cloud</h2>
+        <nz-radio-group *nzSpaceItem formControlName="amountGigabytes">
+          <div nz-row [nzGutter]="16" nzJustify="center">
+            <div nz-col class="gutter-row" [nzSpan]="6">
+              <nz-card>
+                <label nz-radio nzValue="5">
+                  <p>5 Gigabytes</p>
+                </label>
+              </nz-card>
+            </div>
+            <div nz-col class="gutter-row" [nzSpan]="6">
+              <nz-card>
+                <label nz-radio nzValue="10">
+                  <p>10 Gigabytes</p>
+                </label>
+              </nz-card>
+            </div>
+            <div nz-col class="gutter-row" [nzSpan]="6">
+              <nz-card>
+                <label nz-radio nzValue="50">
+                  <p>50 Gigabytes</p>
+                </label>
+              </nz-card>
+            </div>
+          </div>
+        </nz-radio-group>
+        <nz-divider *nzSpaceItem></nz-divider>
+        <div *nzSpaceItem nz-row [nzGutter]="16" nzJustify="center" class="switch-upfront">
+          <div nz-col class="gutter-row" [nzSpan]="6">
+            <nz-switch formControlName="upfrontPayment"></nz-switch>
+            <span>Upfront payment</span>
+          </div>
+        </div>
+      </nz-space>
+    </div>
+    <div class="steps-content text-inherit" *ngIf="index===2">
+      <div nz-row  nzJustify="center">
+        <div nz-col [nzSpan]="12">
+          <h2 nz-typography>Card informations</h2>
+          <nz-input-group nzCompact>
+            <input type="text" nz-input style="width: 60%;" placeholder="Card number" />
+            <nz-date-picker nzFormat="MM/YY" nzPlaceHolder="MM/YY" style="width: 20%;"></nz-date-picker>
+            <input type="number" nz-input style="width: 20%;" placeholder="CVC" />
+          </nz-input-group>
+        </div>
+      </div>
+    </div>
+    <div class="steps-content text-inherit" *ngIf="index===3">
+      <nz-card>
+        <nz-descriptions nzTitle="Resume:"  nzBordered>
+          <nz-descriptions-item nzTitle="Selected subscription">
+            Total price: <b>9 USD</b>
+            <br />
+            Price per GB: <b>3 USD</b>
+          </nz-descriptions-item>
+        </nz-descriptions>
+        <br>
+        <nz-input-group [nzSize]="'large'">
+          <div nz-row [nzGutter]="8">
+            <div nz-col nzSpan="5">
+              <input type="email" nz-input placeholder="Enter your email" />
+            </div>
+          </div>
+        </nz-input-group>
+        <br>
+        <label nz-checkbox>Accept terms</label>
+      </nz-card>
+    </div>
+    <div class="steps-action">
+      <button nz-button nzType="default" type="button" (click)="pre()" *ngIf="current > 0">
+        <span>Previous</span>
+      </button>
+      <button nz-button nzType="default" type="button" (click)="next()" *ngIf="current < 2">
+        <span>Next</span>
+      </button>
+      <button nz-button *ngIf="current === 2" nzType="primary" [disabled]="!validateForm.valid">
+        <span>Done</span>
+      </button>
+    </div>
+  </form>
 </div>
